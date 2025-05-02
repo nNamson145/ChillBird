@@ -72,3 +72,25 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Unity
+Library/
+Logs/
+obj/
+Temp/
+Build/
+Builds/
+MemoryCaptures/
+sysinfo.txt
+
+# Rider
+.idea/
+*.sln
+*.csproj
+
+# VS Code
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
