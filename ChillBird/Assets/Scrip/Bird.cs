@@ -19,11 +19,20 @@ public class Bird : MonoBehaviour
 
     private Camera cam;
     private LineRenderer line;
+    private Rigidbody2D rb;
+    public FollowCamera followCamera;
 
     void Start()
     {
         cam = Camera.main;
         line = GetComponent<LineRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        if (cam != null && followCamera == null)
+        {
+            followCamera = cam.GetComponent<FollowCamera>();
+            cam.transform.position = new Vector3(startPosition.x, startPosition.y, cam.transform.position.z);
+        }
+        
         line.startWidth = 0.1f;
         line.endWidth = 0.1f;
         line.positionCount = 0;
@@ -63,6 +72,7 @@ public class Bird : MonoBehaviour
         isFlying = true;
         timeSinceLaunch = 0;
         line.positionCount = 0;
+        followCamera.isFollowing = true;
     }
 
     void FixedUpdate()
@@ -103,7 +113,10 @@ public class Bird : MonoBehaviour
             
             Vector2 drawPos = CalculatePosition(t, origin);
 
-            line.SetPosition(i, drawPos);
+            if (drawPos.y > -10)
+            {
+                line.SetPosition(i, drawPos);
+            }
         }
     }
 
@@ -112,6 +125,18 @@ public class Bird : MonoBehaviour
         isFlying = false;
         transform.position = startPosition;
         timeSinceLaunch = 0;
+        
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
         line.positionCount = 0;
+        
+        followCamera.isFollowing = false;
+
+        cam.transform.position = new Vector3(startPosition.x, startPosition.y, cam.transform.position.z);
+        
+        line.positionCount = 0;
+        
+
     }
 }
