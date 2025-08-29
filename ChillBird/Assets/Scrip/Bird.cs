@@ -75,11 +75,11 @@ public class Bird : MonoBehaviour
         followCamera.isFollowing = true;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (isFlying)
         {
-            timeSinceLaunch += Time.fixedDeltaTime;
+            timeSinceLaunch += Time.deltaTime;
 
             Vector2 newPos = CalculatePosition(timeSinceLaunch, startPosition);
             transform.position = new Vector3(newPos.x, newPos.y, 0);
@@ -108,15 +108,10 @@ public class Bird : MonoBehaviour
 
         for (int i = 0; i < trajectorySteps; i++)
         {
-            
             float t = i * stepTime;
             
             Vector2 drawPos = CalculatePosition(t, origin);
-
-            if (drawPos.y > -10)
-            {
-                line.SetPosition(i, drawPos);
-            }
+            line.SetPosition(i, drawPos);
         }
     }
 
